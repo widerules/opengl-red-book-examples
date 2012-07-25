@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OpenGL Red Book Examples</string>
+    <string name="ExZagol1">Пример 1</string>
+    <string name="ExText1">Инициализация OpenGL</string>
+    
+    <string name="ExZagol2">Пример 2</string>    
+    <string name="ExText2">Вращающийся квадрат</string>
+        
+    <string name="ExZagol3">Пример 3</string>
+    <string name="ExText3">Перспективная проекция</string>
+    
+    <string name="ExZagol4">Пример 4</string>
+    <string name="ExText4">Применение цвета к разным вершинам</string>
+    
+    <string name="ExZagol5">Пример 5</string>
+    <string name="ExText5">Освещение объектов</string>
+    
+    <string name="ExZagol6">Пример 6</string>
+    <string name="ExText6">Цветовое наложение</string>
+    
+    <string name="ExZagol7">Пример 7</string>
+    <string name="ExText7">Туман</string>
+    
+    <string name="Info1">Исходный код примеров можно скачать по адресу http://perl-sites.develweb.ru/content/72.html</string>
+    <string name="Info2">Автор иконки приложения http://softicons.com/free-icons/designers/c55inator</string>
+
+</resources>
