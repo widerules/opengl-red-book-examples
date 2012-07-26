@@ -12,7 +12,7 @@
     <string name="ExText3">Перспективная проекция</string>
     
     <string name="ExZagol4">Пример 4</string>
-    <string name="ExText4">Применение цвета к разным вершинам</string>
+    <string name="ExText4">Цвет</string>
     
     <string name="ExZagol5">Пример 5</string>
     <string name="ExText5">Освещение объектов</string>
@@ -23,7 +23,10 @@
     <string name="ExZagol7">Пример 7</string>
     <string name="ExText7">Туман</string>
     
-    <string name="Info1">Исходный код примеров можно скачать по адресу http://perl-sites.develweb.ru/content/72.html</string>
+    <string name="ExZagol8">Пример 8</string>
+    <string name="ExText8">Антиалиасинг</string>
+    
+    <string name="Info1">Исходный код примеров можно скачать по адресу http://code.google.com/p/opengl-red-book-examples/</string>
     <string name="Info2">Автор иконки приложения http://softicons.com/free-icons/designers/c55inator</string>
 
 </resources>

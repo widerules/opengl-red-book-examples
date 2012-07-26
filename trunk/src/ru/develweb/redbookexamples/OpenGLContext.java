@@ -30,7 +30,7 @@ public class OpenGLContext extends Activity {
                      
         renderer.SetExampleNum(extras.getInt(EXAMPLE_NAME));
         
-        if (renderer.GetExampleNum() == 5) {
+        if ((renderer.GetExampleNum() == 5) || (renderer.GetExampleNum() == 7)) {
         	Context context = getApplicationContext();
             Toast toast = Toast.makeText(context, "Используйте двойной клик", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.BOTTOM, 0, 50);
@@ -62,6 +62,9 @@ public class OpenGLContext extends Activity {
 			
 			if (glApp.renderer.GetExampleNum() == 5) {
 				glApp.renderer.SwitchAlpha();
+			}
+			else if (glApp.renderer.GetExampleNum() == 7) {
+				glApp.renderer.SwitchAA();
 			}
 			
 			return true;
