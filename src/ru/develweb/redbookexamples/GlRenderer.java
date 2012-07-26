@@ -17,6 +17,7 @@ public class GlRenderer implements Renderer {
 	private float zRot = 0.0f;
 	private int exampleNum;	
 	private boolean alphaType = true;
+	private boolean aaEnable = true;
 	
 	private NewSphere mSphere;
 	
@@ -79,6 +80,9 @@ public class GlRenderer implements Renderer {
 	
 	public void SwitchAlpha () {
 		alphaType = !(alphaType);
+	}
+	public void SwitchAA () {
+		aaEnable = !(aaEnable);
 	}
 	
 	public static FloatBuffer makeFloatBuffer(float[] arr) {
@@ -224,7 +228,7 @@ public class GlRenderer implements Renderer {
 	}
 	
 	protected void Example5 (GL10 gl) {		
-		mSphere.Draw(gl);
+		mSphere.Draw(gl);			
 	}
 	
 	protected void Example6 (GL10 gl) {
@@ -322,15 +326,53 @@ public class GlRenderer implements Renderer {
 		gl.glPopMatrix();			
 	}
 	
+	protected void Example8 (GL10 gl) {	
+		if (aaEnable) {
+			gl.glEnable(GL10.GL_LINE_SMOOTH);
+			gl.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+		}
+		else {
+			gl.glDisable(GL10.GL_LINE_SMOOTH);
+			gl.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_FASTEST);
+		}
+		
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+		
+		float vVertCoord[];
+		vVertCoord = new float[12];
+		FloatBuffer vertexBfr;
+		
+		float vColor[];
+		vColor = new float[16];
+		FloatBuffer colorBfr;
+		
+		vVertCoord[0] = -0.5f; vVertCoord[1] = 0.5f; vVertCoord[2] = 0.0f;
+		vVertCoord[3] = 0.5f; vVertCoord[4] = -0.5f; vVertCoord[5] = 0.0f;
+		vVertCoord[6] = 0.5f; vVertCoord[7] = 0.5f; vVertCoord[8] = 0.0f;
+		vVertCoord[9] = -0.5f; vVertCoord[10] = -0.5f; vVertCoord[11] = 0.0f;
+		
+		vColor[0] = 0.0f; vColor[1] = 1.0f; vColor[2] = 0.0f; vColor[3] = 1.0f;
+		vColor[4] = 0.0f; vColor[5] = 1.0f; vColor[6] = 0.0f; vColor[7] = 1.0f;
+		vColor[8] = 0.0f; vColor[9] = 0.0f; vColor[10] = 1.0f; vColor[11] = 1.0f;	
+		vColor[12] = 0.0f; vColor[13] = 0.0f; vColor[14] = 1.0f; vColor[15] = 1.0f;		
+		
+		vertexBfr = makeFloatBuffer(vVertCoord);
+		colorBfr = makeFloatBuffer(vColor);
+		
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBfr);
+		gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorBfr);
+		gl.glDrawArrays(GL10.GL_LINES, 0, 4);
+		
+		gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
+		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+	}
+	
 	public GlRenderer(Context context) {
 		this.context = context;
 	}
 
-	public void onDrawFrame(GL10 gl) {
-		if (exampleNum != 6) {
-			gl.glClearColor(0, 0, 0, 0);
-		}
-		
+	public void onDrawFrame(GL10 gl) {				
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		
 		if (exampleNum != 6) {
@@ -357,6 +399,9 @@ public class GlRenderer implements Renderer {
 		}
 		else if (exampleNum == 6) {
 			Example7(gl);
+		}
+		else if (exampleNum == 7) {
+			Example8(gl);
 		}
 	}
 
@@ -449,6 +494,14 @@ public class GlRenderer implements Renderer {
 			gl.glLoadIdentity();				
 			
 			gl.glOrthof (-2.5f, 2.5f, -2.5f, 2.5f, -10.0f, 10.0f);
+		}
+		
+		if (exampleNum == 7) {			
+			gl.glEnable(GL10.GL_BLEND);
+			gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);			
+			gl.glLineWidth(1.5f);			
+			
+			GLU.gluOrtho2D (gl, -1.0f, 1.0f, -1.0f, 1.0f);
 		}
 		
 		mSphere = new NewSphere();
