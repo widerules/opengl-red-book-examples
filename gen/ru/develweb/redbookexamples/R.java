@@ -20,8 +20,9 @@ public final class R {
         public static final int example6=0x7f020006;
         public static final int example7=0x7f020007;
         public static final int example8=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int ic_launcher1=0x7f02000a;
+        public static final int example9=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int ic_launcher1=0x7f02000b;
     }
     public static final class id {
         public static final int imageView1=0x7f050003;
@@ -32,6 +33,7 @@ public final class R {
         public static final int imageView6=0x7f050026;
         public static final int imageView7=0x7f05002d;
         public static final int imageView8=0x7f050034;
+        public static final int imageView9=0x7f05003a;
         public static final int scroll=0x7f050000;
         public static final int tableLayout1=0x7f050004;
         public static final int tableLayout2=0x7f05000b;
@@ -42,6 +44,7 @@ public final class R {
         public static final int tableLayout7=0x7f05002e;
         public static final int tableLayout8=0x7f050001;
         public static final int tableRow1=0x7f050002;
+        public static final int tableRow10=0x7f05003b;
         public static final int tableRow11=0x7f050025;
         public static final int tableRow12=0x7f05000c;
         public static final int tableRow13=0x7f050005;
@@ -56,6 +59,7 @@ public final class R {
         public static final int tableRow21=0x7f050023;
         public static final int tableRow22=0x7f050028;
         public static final int tableRow23=0x7f05002a;
+        public static final int tableRow24=0x7f05003d;
         public static final int tableRow25=0x7f05002c;
         public static final int tableRow26=0x7f05002f;
         public static final int tableRow27=0x7f050031;
@@ -64,19 +68,22 @@ public final class R {
         public static final int tableRow5=0x7f050010;
         public static final int tableRow6=0x7f050037;
         public static final int tableRow7=0x7f050017;
+        public static final int tableRow8=0x7f050039;
         public static final int tableRow9=0x7f05001e;
         public static final int textView1=0x7f050006;
         public static final int textView10=0x7f050014;
         public static final int textView11=0x7f05001b;
         public static final int textView12=0x7f050022;
-        public static final int textView13=0x7f05003a;
+        public static final int textView13=0x7f050040;
         public static final int textView14=0x7f050029;
         public static final int textView15=0x7f050036;
         public static final int textView16=0x7f050030;
         public static final int textView17=0x7f050032;
         public static final int textView18=0x7f050038;
+        public static final int textView19=0x7f05003c;
         public static final int textView2=0x7f05000f;
-        public static final int textView3=0x7f050039;
+        public static final int textView20=0x7f05003e;
+        public static final int textView3=0x7f05003f;
         public static final int textView4=0x7f050016;
         public static final int textView5=0x7f05001d;
         public static final int textView6=0x7f050024;
@@ -96,6 +103,7 @@ public final class R {
         public static final int ExText6=0x7f04000c;
         public static final int ExText7=0x7f04000e;
         public static final int ExText8=0x7f040010;
+        public static final int ExText9=0x7f040012;
         public static final int ExZagol1=0x7f040001;
         public static final int ExZagol2=0x7f040003;
         public static final int ExZagol3=0x7f040005;
@@ -104,8 +112,9 @@ public final class R {
         public static final int ExZagol6=0x7f04000b;
         public static final int ExZagol7=0x7f04000d;
         public static final int ExZagol8=0x7f04000f;
-        public static final int Info1=0x7f040011;
-        public static final int Info2=0x7f040012;
+        public static final int ExZagol9=0x7f040011;
+        public static final int Info1=0x7f040013;
+        public static final int Info2=0x7f040014;
         public static final int app_name=0x7f040000;
     }
 }

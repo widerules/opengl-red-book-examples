@@ -20,12 +20,18 @@ public class GlRenderer implements Renderer {
 	private boolean aaEnable = true;
 	
 	private NewSphere mSphere;
+	private Cube mcube;
 	
 	private float matSpecular[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	private float matShininess[] = {100.0f};
 	private float lightPosition[] = {1.0f, 1.0f, 1.0f, 0.0f};
 	private float whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
-
+	
+	private final float MAXZ = 8.0f;
+	private final float MINZ = -8.0f;
+	private final float ZINC = 0.4f;
+	private float solidZ = 8.0f;
+	private float transparentZ = -8.0f;
 	
 	private final static float[][] cubeVertexCoords = new float[][] {
 		new float[] { // front
@@ -365,7 +371,54 @@ public class GlRenderer implements Renderer {
 		gl.glDrawArrays(GL10.GL_LINES, 0, 4);
 		
 		gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);					
+	}
+	
+	protected void Example9 (GL10 gl) {	
+		float matSolid[] = {0.75f, 0.75f, 0.0f, 1.0f};
+		float matZero[] = {0.0f, 0.0f, 0.0f, 1.0f};
+		float matTransparent[] = {0.0f, 0.8f, 0.8f, 0.6f};
+		float matEmission[] = {0.0f, 0.3f, 0.3f, 0.6f};
+		
+		FloatBuffer matSolidBfr;
+		matSolidBfr = makeFloatBuffer(matSolid);
+		FloatBuffer matZeroBfr;
+		matZeroBfr = makeFloatBuffer(matZero);
+		
+		gl.glPushMatrix();
+			gl.glTranslatef(-0.15f, -0.35f, solidZ);
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_EMISSION, matZeroBfr);
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matSolidBfr);
+			mSphere.Draw(gl);			
+		gl.glPopMatrix();		
+		
+		gl.glPushMatrix();
+			gl.glTranslatef(0.15f, 0.15f, transparentZ);
+			gl.glRotatef(15.0f, 1.0f, 1.0f, 0.0f);
+			gl.glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
+			
+			FloatBuffer matTransparentBft;
+			matTransparentBft = makeFloatBuffer(matTransparent);
+			FloatBuffer matEmissionBfr;
+			matEmissionBfr = makeFloatBuffer(matEmission);
+			
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_EMISSION, matEmissionBfr);
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matTransparentBft);
+			
+			gl.glEnable (GL10.GL_BLEND);		
+			gl.glDepthMask (false);
+			gl.glBlendFunc (GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+			
+			mcube.Draw(gl);
+			
+			gl.glDepthMask (true);
+			gl.glDisable (GL10.GL_BLEND);
+		gl.glPopMatrix();
+		
+		if (!((solidZ <= MINZ || transparentZ >= MAXZ))) {
+			solidZ -= ZINC;
+			transparentZ += ZINC;		    
+		}
 	}
 	
 	public GlRenderer(Context context) {
@@ -402,6 +455,9 @@ public class GlRenderer implements Renderer {
 		}
 		else if (exampleNum == 7) {
 			Example8(gl);
+		}
+		else if (exampleNum == 8) {
+			Example9(gl);
 		}
 	}
 
@@ -504,7 +560,40 @@ public class GlRenderer implements Renderer {
 			GLU.gluOrtho2D (gl, -1.0f, 1.0f, -1.0f, 1.0f);
 		}
 		
-		mSphere = new NewSphere();
+		if (exampleNum == 8) {						
+			lightPosition[0] = 0.5f; lightPosition[1] = 0.5f; lightPosition[2] = 1.0f; 
+			
+			FloatBuffer matSpecularBfr;
+			matSpecularBfr = makeFloatBuffer(matSpecular);
+			FloatBuffer matShininessBfr;
+			matShininessBfr = makeFloatBuffer(matShininess);
+			FloatBuffer lightPositionBfr;
+			lightPositionBfr = makeFloatBuffer(lightPosition);
+			FloatBuffer whiteLightBfr;
+			whiteLightBfr = makeFloatBuffer(whiteLight);					
+			
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecularBfr); 
+			gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininessBfr); 
+			gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPositionBfr); 			
+
+			gl.glEnable(GL10.GL_LIGHTING);
+			gl.glEnable(GL10.GL_LIGHT0);		
+			gl.glEnable(GL10.GL_DEPTH_TEST);					
+			
+			gl.glMatrixMode(GL10.GL_PROJECTION);
+			gl.glLoadIdentity();		
+			
+			gl.glEnable(GL10.GL_CULL_FACE);
 		
+			gl.glOrthof(-1.5f, 1.5f, -1.5f, 1.5f, -10.0f, 10.0f);			   
+		}
+		
+		if ((exampleNum == 4) || (exampleNum == 6) || (exampleNum == 8)) {	
+			mSphere = new NewSphere();							
+		}
+		
+		if (exampleNum == 8) {
+			mcube = new Cube();
+		}
 	}	
 }
