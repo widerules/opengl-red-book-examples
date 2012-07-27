@@ -49,6 +49,11 @@ public class RedBookExampleActivity extends Activity {
 		startActivity(intent);		
     }
 	
+	public void textOnClick9(View v) {
+		intent.putExtra(OpenGLContext.EXAMPLE_NAME, 8);
+		startActivity(intent);		
+    }
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {    	    	

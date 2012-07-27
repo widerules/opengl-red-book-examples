@@ -2,7 +2,6 @@ package ru.develweb.redbookexamples;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.GestureDetector;
