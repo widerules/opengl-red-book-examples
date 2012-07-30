@@ -15,6 +15,9 @@ public class OpenGLContext extends Activity {
 	public static final String EXAMPLE_NAME = "ExampleName";
 	private GestureDetector gestureDetector;
 	
+	private float tx = 0.0f;				//Old coordinate TouchScreenX
+	private float ty = 0.0f;				//Old coordinate TouchScreenY
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {    	    	
@@ -29,9 +32,16 @@ public class OpenGLContext extends Activity {
                      
         renderer.SetExampleNum(extras.getInt(EXAMPLE_NAME));
         
-        if ((renderer.GetExampleNum() == 5) || (renderer.GetExampleNum() == 7)) {
+        if ((renderer.GetExampleNum() == 5) || (renderer.GetExampleNum() == 7) || (renderer.GetExampleNum() == 6)) {
         	Context context = getApplicationContext();
             Toast toast = Toast.makeText(context, "Используйте двойной клик", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM, 0, 50);
+            toast.show();
+        }
+        
+        if (renderer.GetExampleNum() == 4) {
+        	Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context, "Нажмите и проведите", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.BOTTOM, 0, 50);
             toast.show();
         }
@@ -45,6 +55,22 @@ public class OpenGLContext extends Activity {
     	if (gestureDetector.onTouchEvent(event)) {			
 			return true;
 		}
+    	
+    	int action = event.getAction();
+    	
+    	if (renderer.GetExampleNum() == 4) {
+    		if ((action == MotionEvent.ACTION_DOWN) | (action == MotionEvent.ACTION_UP)) {
+    			tx = event.getX();
+    			ty = event.getY();
+    		}
+    	
+    		if (action == MotionEvent.ACTION_MOVE) {
+    			renderer.ChangeLightPosition(0.5f * (event.getX() - tx), 0.5f * (event.getY() - ty));
+    		
+    			tx = event.getX();
+    			ty = event.getY();
+    		}
+    	}
     	
     	return super.onTouchEvent(event);
     }
@@ -61,6 +87,9 @@ public class OpenGLContext extends Activity {
 			
 			if (glApp.renderer.GetExampleNum() == 5) {
 				glApp.renderer.SwitchAlpha();
+			}
+			else if (glApp.renderer.GetExampleNum() == 6) {
+				glApp.renderer.SwitchFog();
 			}
 			else if (glApp.renderer.GetExampleNum() == 7) {
 				glApp.renderer.SwitchAA();

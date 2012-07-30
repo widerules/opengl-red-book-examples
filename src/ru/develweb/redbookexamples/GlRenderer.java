@@ -18,6 +18,8 @@ public class GlRenderer implements Renderer {
 	private int exampleNum;	
 	private boolean alphaType = true;
 	private boolean aaEnable = true;
+	private int typeFog = 0;
+	private boolean changeLight = false;
 	
 	private NewSphere mSphere;
 	private Cube mcube;
@@ -87,8 +89,23 @@ public class GlRenderer implements Renderer {
 	public void SwitchAlpha () {
 		alphaType = !(alphaType);
 	}
+	
 	public void SwitchAA () {
 		aaEnable = !(aaEnable);
+	}
+	
+	public void SwitchFog() {
+		typeFog++;
+		if (typeFog >= 3) {
+			typeFog = 0;
+		}
+	}
+	
+	public void ChangeLightPosition (float aX, float aY) {
+		lightPosition[0] = lightPosition[0] + aX;
+		lightPosition[1] = lightPosition[1] + aY;
+		
+		changeLight = true;
 	}
 	
 	public static FloatBuffer makeFloatBuffer(float[] arr) {
@@ -234,6 +251,13 @@ public class GlRenderer implements Renderer {
 	}
 	
 	protected void Example5 (GL10 gl) {		
+		if (changeLight) {
+			FloatBuffer lightPositionBfr;
+			lightPositionBfr = makeFloatBuffer(lightPosition);
+			
+			gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPositionBfr);
+		}
+		
 		mSphere.Draw(gl);			
 	}
 	
@@ -303,6 +327,16 @@ public class GlRenderer implements Renderer {
 	}
 	
 	protected void Example7 (GL10 gl) {
+		if (typeFog == 0) { 
+			gl.glFogx(GL10.GL_FOG_MODE, GL10.GL_EXP);
+		}
+		else if (typeFog == 1) {
+			gl.glFogx(GL10.GL_FOG_MODE, GL10.GL_EXP2);
+		}
+		else if (typeFog == 2) {
+			gl.glFogx(GL10.GL_FOG_MODE, GL10.GL_LINEAR);
+		}
+		
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		
